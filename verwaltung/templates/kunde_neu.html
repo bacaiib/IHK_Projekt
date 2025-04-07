@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block title %}Neuen Kunden anlegen{% endblock %}
+
+{% block content %}
+  <div class="form-container">
+    <h1>Neuen Kunden anlegen</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Speichern</button>
+    </form>
+  </div>
+{% endblock %}

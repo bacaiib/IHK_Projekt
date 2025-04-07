@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block title %}Notiz erfassen{% endblock %}
+
+{% block content %}
+  <div class="form-container">
+    <h1>Notiz erfassen</h1>
+    <form method="post" id="vermerk-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Speichern</button>
+    </form>
+  </div>
+{% endblock %}

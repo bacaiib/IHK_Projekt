@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block title %}Vermerk Ansicht{% endblock %}
+
+{% block content %}
+  <div class="details-container">
+    <h1>Vermerk ID {{ vermerk.gespraechs_id }} für {{ vermerk.firmen_id.firma }}</h1>
+    <p><strong>Erstellt am:</strong> {{ vermerk.datum|date:"d. F" }} um {{ vermerk.uhrzeit|date:"H:i" }}</p>
+    <p><strong>Kontaktart:</strong> {{ vermerk.kontaktart }}</p>
+    <p><strong>Anrede:</strong> {{ vermerk.anrede }}</p>
+    <p><strong>Name:</strong> {{ vermerk.name }}</p>
+    <p><strong>Betreff:</strong> {{ vermerk.betreff }}</p>
+    <p><strong>Wunsch:</strong> {{ vermerk.wunsch }}</p>
+    <p><strong>Gesprächsinhalt:</strong> {{ vermerk.gespraechsinhalt }}</p>
+    <p><strong>Aufgenommen:</strong> {{ vermerk.aufgenommen }}</p>
+    <p><strong>Verfügung:</strong> {{ vermerk.verfuegung }}</p>
+    <p><strong>Email (Kunde):</strong> {{ vermerk.firmen_id.email }}</p>
+    <p><strong>Telefonnr (Kunde):</strong> {{ vermerk.firmen_id.telefon_nr }}</p>
+  </div>
+{% endblock %}

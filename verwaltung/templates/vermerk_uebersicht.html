@@ -1,0 +1,122 @@
+{% extends "index.html" %}
+
+{% block title %}Kundenliste{% endblock %}
+
+{% block content %}
+  <div class="list-container">
+    <h1>Gesprächsliste</h1>
+    <!-- Filterformular -->
+    <form method="get" class="filter-form">
+      <label for="filter_type">Filter nach:</label>
+      <select name="filter_type" id="filter_type" onchange="toggleSearchField()">
+        <option value="wunsch" {% if filter_type == 'wunsch' %}selected{% endif %}>Wunsch</option>
+        <option value="kontaktart" {% if filter_type == 'kontaktart' %}selected{% endif %}>Kontaktart</option>
+        <option value="anrede" {% if filter_type == 'anrede' %}selected{% endif %}>Anrede</option>
+        <option value="name" {% if filter_type == 'name' %}selected{% endif %}>Name</option>
+        <option value="betreff" {% if filter_type == 'betreff' %}selected{% endif %}>Betreff</option>
+        <option value="gespraechsinhalt" {% if filter_type == 'gespraechsinhalt' %}selected{% endif %}>Gesprächsinhalt</option>
+        <option value="firma" {% if filter_type == 'firma' %}selected{% endif %}>Firma</option>
+      </select>
+
+      <!-- Textfeld für Freitext -->
+      <div id="search_term_container" style="display: {% if filter_type not in 'wunsch,kontaktart,anrede,firma' %}block{% else %}none{% endif %};">
+        <label for="search_term">Suchbegriff:</label>
+        <input type="text" name="search_term" id="search_term" value="{{ search_term }}">
+      </div>
+
+      <!-- Dropdown für Wunsch -->
+      <div id="wunsch_container" style="display: {% if filter_type == 'wunsch' %}block{% else %}none{% endif %};">
+        <label for="wunsch_select">Wunsch:</label>
+        <select name="search_term" id="wunsch_select">
+          <option value="">Alle</option>
+          {% for choice in wunsch_choices %}
+            <option value="{{ choice.0 }}" {% if search_term == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Dropdown für Kontaktart -->
+      <div id="kontaktart_container" style="display: {% if filter_type == 'kontaktart' %}block{% else %}none{% endif %};">
+        <label for="kontaktart_select">Kontaktart:</label>
+        <select name="search_term" id="kontaktart_select">
+          <option value="">Alle</option>
+          {% for choice in kontaktart_choices %}
+            <option value="{{ choice.0 }}" {% if search_term == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Dropdown für Anrede -->
+      <div id="anrede_container" style="display: {% if filter_type == 'anrede' %}block{% else %}none{% endif %};">
+        <label for="anrede_select">Anrede:</label>
+        <select name="search_term" id="anrede_select">
+          <option value="">Alle</option>
+          {% for choice in anrede_choices %}
+            <option value="{{ choice.0 }}" {% if search_term == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Dropdown für Firma -->
+      <div id="firma_container" style="display: {% if filter_type == 'firma' %}block{% else %}none{% endif %};">
+        <label for="firma_select">Firma:</label>
+        <select name="search_term" id="firma_select">
+          <option value="">Alle</option>
+          {% for kunde in kunden %}
+            <option value="{{ kunde.kunden_nr }}" {% if search_term == kunde.kunden_nr|stringformat:"s" %}selected{% endif %}>
+              {{ kunde.firma }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit">Filtern</button>
+    </form>
+
+    <!-- Vermerktabelle -->
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>Gesprächs ID</th>
+          <th>Name</th>
+          <th>Betreff</th>
+          <th>Wunsch</th>
+          <th>Datum/Uhrzeit</th>
+          <th>Löschen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in vermerke %}
+          {% if v.gespraechs_id %}
+            <tr>
+              <td><a href="{% url 'vermerk-detail' v.gespraechs_id %}">{{ v.gespraechs_id }}</a></td>
+              <td>{{ v.name|default:"-" }}</td>
+              <td>{{ v.betreff|default:"-" }}</td>
+              <td>{{ v.wunsch|default:"-" }}</td>
+              <td>{{ v.datum }} {{ v.uhrzeit|date:"H:i" }}</td>
+              <td>
+                <form action="{% url 'vermerk-loeschen' v.gespraechs_id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Vermerk löschen möchten?');">🗑️</button>
+                </form>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5">Fehler: Vermerk ohne gespreachs_id: {{ v.gespreachs_id }}</td>
+            </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="5">Keine Vermerke vorhanden.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- JavaScript-Datei einbinden -->
+  {% load static %}
+  <script src="{% static 'js/filter.js' %}"></script>
+{% endblock %}

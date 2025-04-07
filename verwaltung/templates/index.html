@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Meine App{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="nav">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'kunden-uebersicht' %}">Kundenliste</a>
+                    <a href="{% url 'kunde-neu' %}">Kunden anlegen</a>
+                    <a href="{% url 'vermerk-uebersicht' %}">Gesprächsliste</a>
+                    <a href="{% url 'vermerk-erfassen' %}">Gespräch erfassen</a>
+                {% else %}
+                     <div class="nav-placeholder"></div>
+                {% endif %}
+
+
+        <div class="nav-logout">
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-button">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-button">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

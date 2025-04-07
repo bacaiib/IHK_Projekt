@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block title %}Kunden Ansicht{% endblock %}
+
+{% block content %}
+  <div class="details-container">
+    <h1>{{ kunde.firma }}</h1>
+    <p><strong>Kunden Nr.:</strong> {{ kunde.kunden_nr }}</p>
+    <p><strong>Anschrift:</strong> {{ kunde.anschrift }}</p>
+    <p><strong>Telefon:</strong> {{ kunde.telefon_nr }}</p>
+    <p><strong>Fax:</strong> {{ kunde.fax_nr }}</p>
+    <p><strong>Email:</strong> {{ kunde.email }}</p>
+    <p><strong>Stadt:</strong> {{ kunde.stadt }}</p>
+  </div>
+{% endblock %}
