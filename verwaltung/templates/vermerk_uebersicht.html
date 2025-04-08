@@ -90,7 +90,7 @@
         {% for v in vermerke %}
           {% if v.gespraechs_id %}
             <tr>
-              <td><a href="{% url 'vermerk-detail' v.gespraechs_id %}">{{ v.gespraechs_id }}</a></td>
+              <td><a href="{% url 'vermerk_detail' v.gespraechs_id %}">{{ v.gespraechs_id }}</a></td>
               <td>{{ v.name|default:"-" }}</td>
               <td>{{ v.betreff|default:"-" }}</td>
               <td>{{ v.wunsch|default:"-" }}</td>

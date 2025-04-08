@@ -1,4 +1,5 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block title %}Vermerk Ansicht{% endblock %}
 
@@ -10,11 +11,23 @@
     <p><strong>Anrede:</strong> {{ vermerk.anrede }}</p>
     <p><strong>Name:</strong> {{ vermerk.name }}</p>
     <p><strong>Betreff:</strong> {{ vermerk.betreff }}</p>
-    <p><strong>Wunsch:</strong> {{ vermerk.wunsch }}</p>
     <p><strong>Gesprächsinhalt:</strong> {{ vermerk.gespraechsinhalt }}</p>
+    <p><strong>Wunsch:</strong> {{ vermerk.wunsch }}</p>
     <p><strong>Aufgenommen:</strong> {{ vermerk.aufgenommen }}</p>
     <p><strong>Verfügung:</strong> {{ vermerk.verfuegung }}</p>
     <p><strong>Email (Kunde):</strong> {{ vermerk.firmen_id.email }}</p>
     <p><strong>Telefonnr (Kunde):</strong> {{ vermerk.firmen_id.telefon_nr }}</p>
+    <div class="actions">
+      <a href="{% url 'vermerk-uebersicht' %}" class="nav-button">Zurück zur Gesprächsliste</a>
+      <!-- "Bearbeiten"-Button für Vermerk -->
+      <a href="{% url 'vermerk-edit' vermerk.pk %}" class="nav-button edit-btn">Bearbeiten</a>
+      <!-- "Löschen"-Button für Vermerk -->
+      <form action="{% url 'vermerk-loeschen' vermerk.gespraechs_id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="button" class="delete-btn" data-message="Sind Sie sicher, dass Sie den Vermerk vom {{ vermerk.datum|date:'d. F' }} (Betreff: „{{ vermerk.betreff }}“) löschen möchten?">
+          <img src="{% static 'img/icons8-unwiederuflich-löschen-96.png' %}" alt="Löschen" class="delete-icon">
+        </button>
+      </form>
+    </div>
   </div>
 {% endblock %}

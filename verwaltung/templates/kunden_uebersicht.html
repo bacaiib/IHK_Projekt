@@ -42,7 +42,7 @@
           {% if k.kunden_nr %}
             <tr>
               <td>{{ k.kunden_nr }}</td>
-              <td><a href="{% url 'kunden-detail' k.kunden_nr %}">{{ k.firma }}</a></td>
+              <td><a href="{% url 'kunden_detail' k.kunden_nr %}">{{ k.firma }}</a></td>
               <td>{{ k.email|default:"-" }}</td>
               <td>{{ k.anschrift|default:"-" }}</td>
               <td>{{ k.stadt|default:"-" }}</td>

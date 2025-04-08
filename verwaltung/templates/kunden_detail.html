@@ -1,4 +1,5 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block title %}Kunden Ansicht{% endblock %}
 
@@ -6,10 +7,21 @@
   <div class="details-container">
     <h1>{{ kunde.firma }}</h1>
     <p><strong>Kunden Nr.:</strong> {{ kunde.kunden_nr }}</p>
-    <p><strong>Anschrift:</strong> {{ kunde.anschrift }}</p>
+    <p><strong>Email:</strong> {{ kunde.email }}</p>
     <p><strong>Telefon:</strong> {{ kunde.telefon_nr }}</p>
     <p><strong>Fax:</strong> {{ kunde.fax_nr }}</p>
-    <p><strong>Email:</strong> {{ kunde.email }}</p>
+    <p><strong>Anschrift:</strong> {{ kunde.anschrift }}</p>
     <p><strong>Stadt:</strong> {{ kunde.stadt }}</p>
+    <p><strong>PLZ:</strong> {{ kunde.plz }}</p>
+    <div class="actions">
+      <a href="{% url 'kunde-edit' kunde.pk %}" class="nav-button edit-btn">Bearbeiten</a>
+      <!-- "Löschen"-Button für Kunden -->
+      <form action="{% url 'kunde-loeschen' kunde.kunden_nr %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="button" class="delete-btn" data-message="Sind Sie sicher, dass Sie den Kunden „{{ kunde.firma }}“ löschen möchten?">
+          <img src="{% static 'img/icons8-unwiederuflich-löschen-96.png' %}" alt="Löschen" class="delete-icon">
+        </button>
+      </form>
+    </div>
   </div>
 {% endblock %}

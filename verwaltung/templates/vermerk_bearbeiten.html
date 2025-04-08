@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="form-container">
+    <h1>Vermerk bearbeiten</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="save-btn">Speichern</button>
+      <a href="{% url 'vermerk_detail' vermerk.pk %}" class="nav-button cancel-btn">Abbrechen</a>
+    </form>
+  </div>
+{% endblock %}

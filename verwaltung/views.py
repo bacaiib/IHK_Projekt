@@ -22,11 +22,27 @@ def logout_view(request):
 def logout_success(request):
     return render(request, 'logout_success.html')  # Rendert die Erfolgsseite
 
-# class CustomLogoutView(LogoutView):
-#     def dispatch(self, request, *args, **kwargs):
-#         response = super().dispatch(request, *args, **kwargs)
-#         messages.success(request, "Sie haben sich erfolgreich ausgeloggt!")
-#         return response
+def kunde_edit(request, pk):
+    kunde = get_object_or_404(Kunde, pk=pk)
+    if request.method == 'POST':
+        form = KundeForm(request.POST, instance=kunde)
+        if form.is_valid():
+            form.save()
+            return redirect('kunden_detail', kunden_nr=kunde.pk)
+    else:
+        form = KundeForm(instance=kunde)
+    return render(request, 'kunde_bearbeiten.html', {'form': form, 'kunde': kunde})
+
+def vermerk_edit(request, pk):
+    vermerk = get_object_or_404(Vermerk, pk=pk)
+    if request.method == 'POST':
+        form = VermerkForm(request.POST, instance=vermerk)
+        if form.is_valid():
+            form.save()
+            return redirect('vermerk_detail', gespraechs_id=vermerk.gespraechs_id)
+    else:
+        form = VermerkForm(instance=vermerk)
+    return render(request, 'vermerk_bearbeiten.html', {'form': form, 'vermerk': vermerk})
 
 @login_required
 @never_cache

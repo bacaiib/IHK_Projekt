@@ -13,7 +13,15 @@ class KundeForm(forms.ModelForm):
             'plz': 'PLZ',
             'telefon_nr': 'Telefon-nr.:',
             'fax_nr': 'Fax-nr.:',
-
+        }
+        widgets = {
+            'firma': forms.TextInput(attrs={'class': 'form-input'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input'}),
+            'anschrift': forms.TextInput(attrs={'class': 'form-input'}),
+            'stadt': forms.TextInput(attrs={'class': 'form-input'}),
+            'plz': forms.TextInput(attrs={'class': 'form-input'}),
+            'telefon_nr': forms.TextInput(attrs={'class': 'form-input'}),
+            'fax_nr': forms.TextInput(attrs={'class': 'form-input'}),
         }
 
 class VermerkForm(forms.ModelForm):
@@ -30,6 +38,16 @@ class VermerkForm(forms.ModelForm):
             'gespraechsinhalt': 'Gesprächsinhalt',  # Benutzerdefiniertes Label
             'wunsch': 'Wunsch',
             'verfuegung': 'Verfügung',
+        }
+        widgets = {
+            'firmen_id': forms.TextInput(attrs={'class': 'form-input'}),
+            'kontaktart': forms.TextInput(attrs={'class': 'form-input'}),
+            'anrede': forms.TextInput(attrs={'class': 'form-input'}),
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+            'betreff': forms.TextInput(attrs={'class': 'form-input'}),
+            'gespraechsinhalt': forms.TextInput(attrs={'class': 'form-input'}),
+            'wunsch': forms.TextInput(attrs={'class': 'form-input'}),
+            'verfuegung': forms.TextInput(attrs={'class': 'form-input'}),
         }
 
     def __init__(self, *args, **kwargs):
