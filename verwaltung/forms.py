@@ -4,13 +4,33 @@ from .models import Kunde, Vermerk
 class KundeForm(forms.ModelForm):
     class Meta:
         model = Kunde
-        fields = ['firma', 'anschrift', 'telefon_nr', 'fax_nr', 'email', 'stadt']
+        fields = ['firma', 'email', 'telefon_nr', 'fax_nr', 'anschrift', 'stadt', 'plz',  ]
+        labels = {
+            'firma': 'Firma',
+            'email': 'E-Mail',
+            'anschrift': 'Anschrift',
+            'stadt': 'Ort',
+            'plz': 'PLZ',
+            'telefon_nr': 'Telefon-nr.:',
+            'fax_nr': 'Fax-nr.:',
+
+        }
 
 class VermerkForm(forms.ModelForm):
     class Meta:
         model = Vermerk
         fields = ['firmen_id', 'kontaktart', 'anrede', 'name',
-                  'betreff', 'gespraechsinhalt', 'wunsch', 'aufgenommen', 'verfuegung']
+                  'betreff', 'gespraechsinhalt', 'wunsch', 'verfuegung']
+        labels = {
+            'firmen_id': 'Firma',
+            'kontaktart': 'Kontaktart',
+            'anrede': 'Anrede',
+            'name': 'Name',
+            'betreff': 'Betreff',
+            'gespraechsinhalt': 'Gesprächsinhalt',  # Benutzerdefiniertes Label
+            'wunsch': 'Wunsch',
+            'verfuegung': 'Verfügung',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

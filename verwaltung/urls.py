@@ -6,7 +6,8 @@ from .auth_views import CustomLoginView
 urlpatterns = [
     path('', views.index, name='index'),
     path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
+    path('logout-success/', views.logout_success, name='logout_success'),  # Neue URL
     path('kunden/', views.kunden_uebersicht, name='kunden-uebersicht'),
     path('kunde/<int:kunden_nr>/', views.kunden_detail, name='kunden-detail'),
     path('kunde/neu/', views.kunde_neu, name='kunde-neu'),

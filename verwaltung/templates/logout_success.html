@@ -1,0 +1,36 @@
+<!-- logout_success.html -->
+{% extends "index.html" %}
+
+{% block title %}
+  Erfolgreich ausgeloggt
+{% endblock %}
+
+{% block content %}
+  <div class="logout-success-container">
+    <div class="alert alert-success">
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      {% else %}
+        <p>Sie haben sich erfolgreich ausgeloggt!</p>
+      {% endif %}
+      <p>Sie werden in <span id="countdown">3</span> Sekunden zur Login-Seite weitergeleitet...</p>
+      <p><a href="{% url 'login' %}">Jetzt zur Login-Seite</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Countdown und Weiterleitung
+    let countdown = 9;
+    const countdownElement = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      countdown--;
+      countdownElement.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(interval);
+        window.location.href = "{% url 'login' %}";  // Weiterleitung zur Login-Seite
+      }
+    }, 1000);
+  </script>
+{% endblock %}

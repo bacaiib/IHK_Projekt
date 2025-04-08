@@ -8,30 +8,132 @@
 </head>
 <body>
     <div class="nav">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'kunden-uebersicht' %}">Kundenliste</a>
-                    <a href="{% url 'kunde-neu' %}">Kunden anlegen</a>
-                    <a href="{% url 'vermerk-uebersicht' %}">Gesprächsliste</a>
-                    <a href="{% url 'vermerk-erfassen' %}">Gespräch erfassen</a>
-                {% else %}
-                     <div class="nav-placeholder"></div>
-                {% endif %}
+              <!-- Firmenlogo ganz links -->
+        <div class="nav-logo">
+            <img src="{% static 'img/companylogo.png' %}" alt="Firmenlogo">
+        </div>
+            <!-- Benutzerinfo und Logout/Login-Button ganz rechts -->
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <span>Angemeldet als: {{ user.username }}</span>
+            {% else %}
+                <span>Nicht angemeldet</span>
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'kunden-uebersicht' %}">Kundenliste</a>
+            <a href="{% url 'kunde-neu' %}">Kunden anlegen</a>
+            <a href="{% url 'vermerk-uebersicht' %}">Gesprächsliste</a>
+            <a href="{% url 'vermerk-erfassen' %}">Gespräch erfassen</a>
+        {% else %}
+             <div class="nav-placeholder"></div>
+        {% endif %}
 
 
         <div class="nav-logout">
             {% if user.is_authenticated %}
                 <form action="{% url 'logout' %}" method="post" class="inline-form">
                     {% csrf_token %}
-                    <button type="submit" class="nav-button">Logout</button>
+                    <button type="submit" class="nav-button logout-btn">Logout</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}" class="nav-button">Login</a>
+                <a href="{% url 'login' %}" class="nav-button login-btn">Login</a>
             {% endif %}
         </div>
-    </div>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
+
+
+             <!-- Modal-Fenster für Löschbestätigung -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close">×</span>
+                <h2>Bestätigung</h2>
+                <p id="deleteMessage">Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?</p>
+                <div class="modal-buttons">
+                    <button id="confirmDelete" class="modal-btn confirm-btn">Ja, löschen</button>
+                    <button id="cancelDelete" class="modal-btn cancel-btn">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <div class="container">
+            {% block content %}
+                 <!-- Begrüßungsfenster -->
+                {% if user.is_authenticated %}
+                    <div class="welcome-container">
+                        <div class="alert alert-success">
+                            <p>Willkommen, {{ user.username }}!</p>
+                            <p>Schön, dass Sie wieder hier sind.</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="welcome-container">
+                        <div class="alert alert-info">
+                            <p>Willkommen auf der App!</p>
+                            <p>Bitte <a href="{% url 'login' %}">melden Sie sich an</a>, um fortzufahren.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+
+                 <!-- JavaScript für das Modal-Fenster -->
+        <script>
+            const modal = document.getElementById('deleteModal');
+            const closeModal = document.querySelector('.modal-close');
+            const confirmDeleteBtn = document.getElementById('confirmDelete');
+            const cancelDeleteBtn = document.getElementById('cancelDelete');
+            const deleteMessage = document.getElementById('deleteMessage');
+            let currentForm = null;
+
+            // Alle "Löschen"-Buttons auswählen
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();  // Verhindert das Standardverhalten (z. B. Formular-Submit)
+                    event.stopPropagation();  // Verhindert, dass das Klick-Ereignis das Modal schließt
+                    const form = this.closest('form');  // Das Formular, das den Button enthält
+                    const message = this.getAttribute('data-message');  // Die Nachricht aus einem data-Attribut holen
+                    if (form && message) {
+                        openDeleteModal(form, message);
+                    } else {
+                        console.error('Formular oder Nachricht nicht gefunden');
+                    }
+                });
+            });
+
+            function openDeleteModal(form, message) {
+                console.log('openDeleteModal aufgerufen');
+                currentForm = form;
+                deleteMessage.textContent = message;
+                modal.style.display = 'flex';
+            }
+
+            closeModal.onclick = function() {
+                modal.style.display = 'none';
+                console.log('Modal geschlossen (X)');
+            };
+
+            cancelDeleteBtn.onclick = function() {
+                modal.style.display = 'none';
+                console.log('Modal geschlossen (Abbrechen)');
+            };
+
+            confirmDeleteBtn.onclick = function() {
+                if (currentForm) {
+                    console.log('Löschen bestätigt');
+                    currentForm.submit();
+                }
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function(event) {
+                if (modal.style.display === 'flex' && event.target === modal) {
+                    modal.style.display = 'none';
+                    console.log('Modal geschlossen (Klick außerhalb)');
+                }
+            };
+        </script>
 </body>
 </html>

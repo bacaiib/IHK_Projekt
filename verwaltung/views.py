@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.auth import logout
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -9,6 +11,22 @@ from django.utils import timezone
 
 def index(request):
     return render(request, 'index.html')
+
+@login_required
+@never_cache
+def logout_view(request):
+    logout(request)  # Benutzer ausloggen
+    messages.success(request, "Sie haben sich erfolgreich ausgeloggt!")  # Erfolgsmeldung
+    return redirect('logout_success')  # Weiterleitung zur Erfolgsseite
+
+def logout_success(request):
+    return render(request, 'logout_success.html')  # Rendert die Erfolgsseite
+
+# class CustomLogoutView(LogoutView):
+#     def dispatch(self, request, *args, **kwargs):
+#         response = super().dispatch(request, *args, **kwargs)
+#         messages.success(request, "Sie haben sich erfolgreich ausgeloggt!")
+#         return response
 
 @login_required
 @never_cache
