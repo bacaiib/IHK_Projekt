@@ -1,0 +1,537 @@
+/* verwaltung/static/css/style.css */
+
+
+body {
+    background-image: url('/static/img/243.jpg');
+    background-size: cover;        /* passt das Bild an die Fenstergröße an */
+    background-repeat: no-repeat;  /* verhindert Wiederholung des Bildes */
+    background-position: center center; /* zentriert das Bild */
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;  /* Stellt sicher, dass der Body die volle Höhe des Viewports einnimmt */
+    display: flex;
+    flex-direction: column;
+    font-family: 'Arial', sans-serif;  /* Schriftart global anpassen */
+    font-size: 14,5px;  /* Standard-Schriftgröße */
+    line-height: 1.6;  /* Zeilenabstand für bessere Lesbarkeit */
+}
+
+/* Globale Stile für Überschriften */
+h1, h2, h3, h4, h5, h6 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);  /* Leichter Schatten */
+}
+.nav {
+    background-color: #444;
+    padding: 10px;
+    text-align: center;  /* Behält die Zentrierung für .nav-center bei */
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+}
+.nav-placeholder {
+    width: 200px; /* Passe die Breite an deine Links an */
+    height: 18px; /* Minimal, um unsichtbar zu sein */
+    visibility: hidden; /* Versteckt den Platzhalter */
+}
+.nav a.nav-button {
+    margin: 0;
+}
+
+/* Sorgt für ein identisches Aussehen von Links und Buttons */
+.nav-button,
+.nav-button:link,
+.nav-button:visited,
+.nav-button:hover,
+.nav-button:active {
+    display: inline-block;
+    width: 80px !important;           /* feste Breite – passe nach Wunsch an */
+    box-sizing: border-box;
+    text-align: center;    /* Text mittig ausrichten */
+    white-space: nowrap;   /* Verhindert Zeilenumbrüche */
+    margin: 0;
+    padding: 2px 8px;       /* Einheitliches Padding */
+    font-size: 14px;         /* Einheitliche Schriftgröße */
+    line-height: 1.2;        /* Einheitliche Zeilenhöhe */
+    color: #000;             /* schwarze Schrift */
+    background-color: #fff;  /* weißer Hintergrund */
+    border: 1px solid #000;  /* sichtbarer Rahmen (wenn Du willst) */
+    border-radius: 4px;      /* abgerundete Ecken */
+    cursor: pointer;
+    text-decoration: none;   /* keine Unterstreichung für Links */
+
+    /* Entfernt unterschiedliche Browser-Defaults bei Buttons */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+/* Firmenlogo ganz links */
+.nav-logo {
+    position: absolute;
+    left: 10px;
+    top: 56%;
+    transform: translateY(-50%);  /* Vertikal zentrieren */
+}
+
+.nav-logo img {
+    height: 33px;  /* Höhe des Logos anpassen */
+    width: auto;  /* Breite proportional zur Höhe */
+}
+
+.inline-form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Optionaler Hover-Effekt für beide */
+.nav-button:hover {
+    background-color: #eee;
+}
+
+/* Hiermit wird der Logout-Button ganz rechts fixiert */
+.nav-logout {
+    position: absolute;
+    right: 30px;   /* Abstand vom rechten Rand */
+    top: 8px;     /* Abstand vom oberen Rand */
+}
+
+/* Neue Stile für Login- und Logout-Button */
+.nav-button.login-btn {
+    background-color: #28a745;  /* Grün */
+    color: #fff;  /* Weiße Schrift */
+    border: 1px solid #1e7e34;  /* Dunklerer grüner Rahmen */
+}
+
+.nav-button.login-btn:hover {
+    background-color: #218838;  /* Dunkleres Grün beim Hover */
+}
+
+.nav-button.logout-btn {
+    background-color: #dc3545;  /* Rot */
+    color: #fff;  /* Weiße Schrift */
+    border: 1px solid #c82333;  /* Dunklerer roter Rahmen */
+}
+
+.nav-button.logout-btn:hover {
+    background-color: #c82333;  /* Dunkleres Rot beim Hover */
+}
+/* Neue Stile für die Benutzeranzeige */
+/* Benutzerinfo und Logout/Login-Button ganz rechts */
+.nav-right {
+    position: absolute;
+    right: 130px;
+    top: 50%;
+    transform: translateY(-50%);  /* Vertikal zentrieren */
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* Abstand zwischen Benutzerinfo und Button */
+    font-size: 13px;
+}
+
+.nav-user {
+    color: #fff;  /* Weiße Schrift, passend zur Navbar */
+    font-size: 10px;  /* Gleiche Schriftgröße wie .nav-button */
+    position: static;  /* Entfernt die absolute Positionierung, da jetzt in .nav-right */
+    top: auto;  /* Entfernt die vorherige Positionierung */
+    left: auto;  /* Entfernt die vorherige Positionierung */
+}
+
+.nav-user span {
+    padding: 2px 8px;  /* Gleiches Padding wie .nav-button */
+    background-color: rgba(255, 255, 255, 0.1);  /* Leicht transparenter Hintergrund */
+    border-radius: 4px;  /* Abgerundete Ecken */
+}
+/* Gemeinsamer Container für Listen-Ansichten */
+.list-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Überschriften im Container */
+.list-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Angepasstes Filterformular */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-form label {
+    margin: 5px;
+    font-weight: bold;
+}
+
+.filter-form input,
+.filter-form select {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Angepasster Button im Filterformular */
+.filter-form button {
+    padding: 5px 15px;
+    margin: 5px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Verbesserte Tabellen-Darstellung */
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+/* Kopfzeile hervorheben */
+.customer-table thead th {
+    padding: 12px 10px;
+    background-color: #444;
+    color: #fff;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+/* Tabellenzellen in tbody, dezente Trennung */
+.customer-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Letzte Zeile ohne untere Linie */
+.customer-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.customer-table a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;  /* Etwas Padding für bessere Klickfläche */
+    display: inline-flex;  /* Flexbox für bessere Ausrichtung des Bildes */
+    align-items: center;  /* Vertikal zentrieren */
+    justify-content: center;  /* Horizontal zentrieren */
+}
+
+/* Stil für das PNG-Symbol */
+.delete-icon {
+    width: 22px;  /* Breite des Symbols */
+    height: 22px;  /* Höhe des Symbols */
+    margin-left: 18px;
+    transition: opacity 0.2s ease;  /* Sanfter Übergang für Hover-Effekt */
+}
+
+/* Hover-Effekt: Symbol wird leicht transparent */
+.delete-btn:hover .delete-icon {
+    opacity: 0.7;  /* Leicht transparent beim Hover */
+}
+
+/* Container für das gesamte Formular */
+.form-container {
+    max-width: 600px;  /* Begrenzte Breite für bessere Lesbarkeit */
+    margin: 60px auto; /* Zentriert das Formular vertikal & horizontal */
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Leichter Schatten für Tiefe */
+}
+
+/* Formatierung des Speichern-Buttons */
+.form-container button {
+    width: 120px;
+    padding: 10px;
+    font-size: 16px;
+    margin: 20px auto 0 auto;
+    display: block;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Hover-Effekt für Button */
+.form-container button:hover {
+    background-color: #555;
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container form p {
+    margin-bottom: 1px;
+}
+
+/* Optional: Styles für Labels und Inputs (funktionieren, wenn du nicht nur form.as_p nutzt) */
+.form-container label {
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+}
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: 250px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+
+    box-sizing: border-box;
+}
+
+/* Styles für Detailansichten (z.B. Kunden- oder Vermerkansicht) */
+.details-container {
+    max-width: 800px;
+    margin: 60px auto;
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.details-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.details-container p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+/* Begrüßungsfenster */
+.welcome-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.welcome-container p {
+    margin: 10px 0;
+}
+
+.welcome-container a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Neue Stile für nicht eingeloggte Benutzer */
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+
+
+/* Neue Stile für die Logout-Success-Seite */
+.logout-success-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.logout-success-container .alert-success {
+    margin-bottom: 20px;
+}
+
+.logout-success-container p {
+    margin: 10px 0;
+}
+
+.logout-success-container a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Modal-Fenster */
+.modal {
+    display: none;  /* Standardmäßig ausgeblendet */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;  /* Wird nur angewendet, wenn display: flex gesetzt ist */
+    align-items: flex-start;
+}
+
+.modal-content {
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    margin-top: 100px
+}
+
+/* Rest der Modal-Stile bleibt unverändert */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.modal-content p {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.confirm-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.confirm-btn:hover {
+    background-color: #c82333;
+}
+
+.cancel-btn {
+    background-color: #444;
+    color: #fff;
+}
+
+.cancel-btn:hover {
+    background-color: #555;
+}
+
+/* Bearbeiten-Button */
+.edit-btn {
+    background-color: #007bff;  /* Blau */
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;  /* Flexbox verwenden */
+    align-items: center;  /* Vertikal zentrieren */
+    justify-content: center;  /* Horizontal zentrieren */
+    margin-right: 10px;
+    min-width: 95px;  /* Optional: Mindestbreite für bessere Optik */
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;  /* Dunkleres Blau */
+}
+
+/* Actions-Container für bessere Ausrichtung */
+.actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.save-btn {
+    background-color: #28a745;  /* Grün für "Speichern" */
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #218838;  /* Dunkleres Grün */
+}
+
+
+

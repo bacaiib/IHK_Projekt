@@ -180,24 +180,19 @@ def vermerk_erfassen(request):
     if request.method == "POST":
         form = VermerkForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['firmen_id'] == "new":
-                return redirect('kunde-neu')
-            else:
-                #vermerk = form.save(commit=False)
-                # now = timezone.localtime(timezone.now())
-                # adjusted_time = now.time().replace(second=0, microsecond=0)
-                # vermerk.uhrzeit = adjusted_time
-                form.save()
-                return redirect('vermerk-uebersicht')
+                vermerk = form.save(commit=False)  # Vermerk noch nicht speichern
+                vermerk.aufgenommen = request.user.username  # Nutzername wird gespeichert
+                form.save()  # Jetzt speichern
+                return redirect('vermerk-uebersicht')  # Weiterleitung zur Übersicht
     else:
         initial_data = {}
         kunden_nr = request.GET.get('kunden_nr')
         if kunden_nr:
-            kunde = get_object_or_404(Kunde, kunden_nr=kunden_nr)
+            kunde = get_object_or_404(Kunde, kunden_nr=kunden_nr) # Kunden-Nr. aus URL holen
             initial_data = {
-                'firmen_id': kunde.kunden_nr,
+                'firmen_id': kunde.kunden_nr,  # Vorbelegung des Kundenfeldes
             }
-        initial_data['datum'] = timezone.now()
+        initial_data['datum'] = timezone.now()  # Aktuelles Datum vorbelegen
         form = VermerkForm(initial=initial_data)
     return render(request, 'vermerk_erfassen.html', {'form': form})
 

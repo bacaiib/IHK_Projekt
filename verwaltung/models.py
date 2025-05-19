@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
 class Kunde(models.Model):
     kunden_nr = models.AutoField(primary_key=True)
     firma = models.CharField(max_length=60)
@@ -16,12 +15,12 @@ class Kunde(models.Model):
     def __str__(self):
         return f"{self.firma} ({self.kunden_nr})"
 
-
 class Vermerk(models.Model):
-    gespraechs_id = models.AutoField(primary_key=True)
-    datum = models.DateField(auto_now_add=True)
-    uhrzeit = models.TimeField()
-    kontaktart = models.CharField(
+    gespraechs_id = models.AutoField(primary_key=True) # Automatisch generierte ID als Primärschlüssel
+    datum = models.DateField(auto_now_add=True)  # Datum wird beim Erstellen automatisch gesetzt
+    uhrzeit = models.TimeField() # Uhrzeit des Gesprächs (automatisch über save())
+
+    kontaktart = models.CharField( # Auswahlfeld für Art des Kontakts
         max_length=18,
         choices=[('Eingehender Anruf', 'Anruf von'),
                  ('Ausgehender Anruf', 'Anruf bei'),
@@ -29,7 +28,7 @@ class Vermerk(models.Model):
                  ('Beim Kunden', 'Besuch bei')],
         default='Anruf'
     )
-    anrede = models.CharField(
+    anrede = models.CharField( # Auswahlfeld für Anrede
         max_length=10,
         choices=[('Herr', 'Herr'), ('Frau', 'Frau'), ('Divers', 'Divers')],
         default='Herr'
@@ -43,10 +42,9 @@ class Vermerk(models.Model):
         default='wünscht Rückruf'
     )
     gespraechsinhalt = models.TextField()
-    firmen_id = models.ForeignKey(Kunde, on_delete=models.CASCADE, related_name='vermerke')
-
-    aufgenommen = models.CharField(max_length=40, default='')
-    verfuegung = models.CharField(max_length=40, default='')
+    firmen_id = models.ForeignKey(Kunde, on_delete=models.CASCADE, related_name='vermerke') # Fremdschlüssel zum Kunden
+    aufgenommen = models.CharField(max_length=40, default='')  # Mitarbeiter, der das Gespräch aufgenommen hat
+    verfuegung = models.CharField(max_length=100, default='')  # Interne Weiterleitung oder Folgeaktion
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -56,7 +54,6 @@ class Vermerk(models.Model):
 
     def __str__(self):
         return f"Gespräch {self.gespraechs_id} für {self.firmen_id.firma}"
-
 
 class LoginAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

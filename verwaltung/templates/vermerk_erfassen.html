@@ -1,3 +1,5 @@
+<!-- Dieses Template erbt vom Basistemplate "index.html",
+     um Layout und Styles wiederzuverwenden -->
 {% extends "index.html" %}
 
 {% block title %}Notiz erfassen{% endblock %}
@@ -6,9 +8,17 @@
   <div class="form-container">
     <h1>Notiz erfassen</h1>
     <form method="post" id="vermerk-form">
-      {% csrf_token %}
-      {{ form.as_p }}
+      {% csrf_token %} <!-- Schutz vor Cross-Site-Request-Forgery (CSRF) –
+                            verhindert Angriffe durch gefälschte Formularanfragen -->
+      {{ form.as_p }}  <!-- Django rendert alle Felder als <p>-Elemente -->
       <button type="submit">Speichern</button>
     </form>
   </div>
 {% endblock %}
+
+
+
+
+
+
+

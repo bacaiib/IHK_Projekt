@@ -11,8 +11,8 @@ class KundeForm(forms.ModelForm):
             'anschrift': 'Anschrift',
             'stadt': 'Ort',
             'plz': 'PLZ',
-            'telefon_nr': 'Telefon-nr.:',
-            'fax_nr': 'Fax-nr.:',
+            'telefon_nr': 'Telefon-Nr.:',
+            'fax_nr': 'Fax-Nr.:',
         }
         widgets = {
             'firma': forms.TextInput(attrs={'class': 'form-input'}),
@@ -40,13 +40,13 @@ class VermerkForm(forms.ModelForm):
             'verfuegung': 'Verfügung',
         }
         widgets = {
-            'firmen_id': forms.TextInput(attrs={'class': 'form-input'}),
-            'kontaktart': forms.TextInput(attrs={'class': 'form-input'}),
-            'anrede': forms.TextInput(attrs={'class': 'form-input'}),
+            'firmen_id': forms.Select(attrs={'class': 'form-input'}),
+            'kontaktart': forms.Select(attrs={'class': 'form-input'}),
+            'anrede': forms.Select(attrs={'class': 'form-input'}),
             'name': forms.TextInput(attrs={'class': 'form-input'}),
             'betreff': forms.TextInput(attrs={'class': 'form-input'}),
-            'gespraechsinhalt': forms.TextInput(attrs={'class': 'form-input'}),
-            'wunsch': forms.TextInput(attrs={'class': 'form-input'}),
+            'gespraechsinhalt': forms.Textarea(attrs={'class': 'form-input'}),
+            'wunsch': forms.Select(attrs={'class': 'form-input'}),
             'verfuegung': forms.TextInput(attrs={'class': 'form-input'}),
         }
 

@@ -98,7 +98,7 @@
               <td>
             <form action="{% url 'vermerk-loeschen' v.gespraechs_id %}" method="post" style="display:inline;">
                 {% csrf_token %}
-                <button type="button" class="delete-btn" data-message="Sind Sie sicher, dass Sie den Vermerk vom {{ vermerk.datum }} (Thema: „{{ vermerk.thema }}“) löschen möchten?">
+                <button type="button" class="delete-btn" data-message="Sind Sie sicher, dass Sie den Vermerk vom {{ v.datum }} mit {{ v.name }} löschen möchten?">
                     <img src="{% static 'img/icons8-unwiederuflich-löschen-96.png' %}" alt="Löschen" class="delete-icon">
                 </button>
             </form>
